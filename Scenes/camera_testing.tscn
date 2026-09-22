@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://buwefa6gf1h4n"]
+
+[ext_resource type="PackedScene" uid="uid://biuf5g7gh0im" path="res://Player/player.tscn" id="1_7nkri"]
+[ext_resource type="PackedScene" uid="uid://dltj7nkgsaaov" path="res://Cameras/re_camera.tscn" id="2_ug6hl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oy4y2"]
+sky_top_color = Color(0.09099045, 0.8254436, 0.99999994, 1)
+sky_horizon_color = Color(1.1959854, 1.4132882, 1.476625, 1)
+ground_bottom_color = Color(0.47254843, 0.60730654, 0.68609744, 1)
+ground_horizon_color = Color(1.1959854, 1.4132882, 1.476625, 1)
+energy_multiplier = 0.7
+
+[sub_resource type="Sky" id="Sky_q6o4f"]
+sky_material = SubResource("ProceduralSkyMaterial_oy4y2")
+
+[sub_resource type="Environment" id="Environment_gdgra"]
+background_mode = 2
+sky = SubResource("Sky_q6o4f")
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q6o4f"]
+size = Vector3(18.302763, 1.5932617, 10.939484)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gdgra"]
+size = Vector3(10.895, 7.5332813, 17.536102)
+
+[node name="Camera Testing" type="Node3D" unique_id=504497591]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=197274091]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 696.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1381379360]
+environment = SubResource("Environment_gdgra")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1906361072]
+use_collision = true
+
+[node name="floor" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1020592005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(300, 1, 300)
+metadata/_edit_lock_ = true
+
+[node name="walls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1598436821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.413332, 5.5, -3.9674501)
+size = Vector3(1, 12, 15.932129)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1609137773]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.937148, 5.5, 3.598615)
+size = Vector3(1, 12, 34)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D" unique_id=705985851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.877766, 5.5, -6.1233225)
+size = Vector3(1, 12, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1822146793]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.6440573, 5.5, -3.3366601)
+size = Vector3(1, 12, 29)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1976149939]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.6440573, 5.5, -9.409632)
+size = Vector3(1, 12, 33)
+
+[node name="Player" parent="." unique_id=533186693 instance=ExtResource("1_7nkri")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="ReCamera2" parent="." unique_id=1684705865 instance=ExtResource("2_ug6hl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20.5694, 5.676435, 1.6266273)
+follow_player = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReCamera2/Trigger" parent_id_path=PackedInt32Array(1684705865, 1215026530) index="0" unique_id=2130101359]
+transform = Transform3D(0.99999994, -2.9802322e-08, 4.4703484e-08, -1.4901161e-08, 0.99999976, 1.4901161e-08, 0, 1.7508864e-07, 0.9999999, 22.574455, -7.5960116e-08, -0.15571593)
+shape = SubResource("BoxShape3D_q6o4f")
+debug_color = Color(1, 1, 1, 0.41960785)
+
+[node name="ReCamera" parent="." unique_id=52390320 instance=ExtResource("2_ug6hl")]
+unique_name_in_owner = true
+transform = Transform3D(0.2755746, 0.5144548, -0.8120314, 2.339333e-08, 0.84474, 0.535177, 0.9612797, -0.14748122, 0.23278888, -7.4226494, 5.339909, 2.3776586)
+
+[node name="Trigger" parent="ReCamera" index="0" unique_id=1215026530]
+transform = Transform3D(0.27557465, 0.5144548, -0.8120314, 2.339333e-08, 0.84474, 0.535177, 0.9612797, -0.14748123, 0.2327889, -0.644053, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReCamera/Trigger" index="0" unique_id=156341942]
+transform = Transform3D(0.9659254, -0.00019934334, -0.25881895, -0.13851365, 0.84434175, -0.51759064, 0.218633, 0.53580505, 0.8155436, 1.5949658, 0.3207809, -5.324143)
+shape = SubResource("BoxShape3D_gdgra")
+debug_color = Color(0.40013954, 0.054770797, 7.219613e-08, 0.41960785)
+
+[editable path="Player"]
+[editable path="ReCamera2"]
+[editable path="ReCamera"]

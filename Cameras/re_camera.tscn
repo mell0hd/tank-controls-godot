@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dltj7nkgsaaov"]
+
+[ext_resource type="Script" uid="uid://ctkqwpxrd5g1h" path="res://Scripts/follow_camera.gd" id="1_q1yj7"]
+
+[node name="ReCamera" type="Camera3D" unique_id=1684705865 groups=["camera"]]
+script = ExtResource("1_q1yj7")
+
+[node name="Trigger" type="Area3D" parent="." unique_id=1215026530]
+top_level = true
+collision_mask = 5
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]

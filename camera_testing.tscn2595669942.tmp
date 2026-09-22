@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://buwefa6gf1h4n"]
+
+[ext_resource type="PackedScene" uid="uid://biuf5g7gh0im" path="res://player.tscn" id="1_7oeak"]
+[ext_resource type="Script" uid="uid://ctkqwpxrd5g1h" path="res://follow_camera.gd" id="2_oy4y2"]
+
+[node name="Camera Testing" type="Node3D" unique_id=504497591]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1906361072]
+use_collision = true
+
+[node name="floor" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1020592005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(300, 1, 300)
+metadata/_edit_lock_ = true
+
+[node name="walls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1598436821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.413332, 5.5, -3.9674501)
+size = Vector3(1, 12, 15.932129)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1609137773]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.937148, 5.5, 3.598615)
+size = Vector3(1, 12, 34)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D" unique_id=705985851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.877766, 5.5, -6.1233225)
+size = Vector3(1, 12, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1822146793]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.6440573, 5.5, -3.3366601)
+size = Vector3(1, 12, 29)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1976149939]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.6440573, 5.5, -9.409632)
+size = Vector3(1, 12, 33)
+
+[node name="Player" parent="." unique_id=533186693 instance=ExtResource("1_7oeak")]
+
+[node name="ReCamera" type="Camera3D" parent="." unique_id=2083221794]
+unique_name_in_owner = true
+script = ExtResource("2_oy4y2")
+follow_player = null

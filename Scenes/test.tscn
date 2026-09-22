@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://vypevb7cgb2t"]
+
+[ext_resource type="PackedScene" uid="uid://biuf5g7gh0im" path="res://Player/player.tscn" id="1_37kl0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37kl0"]
+sky_top_color = Color(0.09099045, 0.8254436, 0.99999994, 1)
+sky_horizon_color = Color(1.1959854, 1.4132882, 1.476625, 1)
+ground_bottom_color = Color(0.47254843, 0.60730654, 0.68609744, 1)
+ground_horizon_color = Color(1.1959854, 1.4132882, 1.476625, 1)
+energy_multiplier = 0.7
+
+[sub_resource type="Sky" id="Sky_8uh7m"]
+sky_material = SubResource("ProceduralSkyMaterial_37kl0")
+
+[sub_resource type="Environment" id="Environment_6uqi0"]
+background_mode = 2
+sky = SubResource("Sky_8uh7m")
+glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_g6a65"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g6a65"]
+
+[node name="Node3D" type="Node3D" unique_id=963526043]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=851155201]
+transform = Transform3D(-0.9659258, 0.25881907, 1.1313341e-08, 0, -4.371139e-08, 1, 0.25881907, 0.9659258, 4.222196e-08, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 696.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=168847147]
+environment = SubResource("Environment_6uqi0")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=992147274]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010565281, -0.5514394, -0.025974274)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=785319184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.010565281, 0.007974744, 0.025974274)
+size = Vector3(100, 1, 100)
+
+[node name="CharacterBody3D" parent="." unique_id=533186693 instance=ExtResource("1_37kl0")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=305665527]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 2.5021775, -5.4276853)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1393034087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.840204, 2.5413163, 0)
+disable_mode = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=844153726]
+mesh = SubResource("SphereMesh_g6a65")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1264625203]
+shape = SubResource("SphereShape3D_g6a65")
