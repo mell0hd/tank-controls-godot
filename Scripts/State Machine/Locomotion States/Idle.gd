@@ -1,5 +1,6 @@
-extends PlayerState
 class_name IdleState
+extends PlayerState
+
 
 func enter():
 	print(" ")

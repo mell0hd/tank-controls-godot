@@ -1,5 +1,5 @@
-extends PlayerState
 class_name RunState
+extends PlayerState
 
 func enter():
 	print(" ")

@@ -1,5 +1,5 @@
-extends PlayerState
 class_name WalkState
+extends PlayerState
 
 
 

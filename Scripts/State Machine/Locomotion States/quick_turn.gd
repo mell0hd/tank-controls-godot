@@ -1,5 +1,6 @@
-extends PlayerState
 class_name QuickTurnState
+
+extends PlayerState
 
 func enter():
 	print(" ")

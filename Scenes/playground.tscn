@@ -1,8 +1,8 @@
 [gd_scene format=4 uid="uid://cb6xph7tw3xwf"]
 
-[ext_resource type="Material" uid="uid://dr1w036iuxu" path="res://materials/grid.tres" id="1_6xle2"]
+[ext_resource type="Material" uid="uid://dr1w036iuxu" path="res://Materials/grid.tres" id="1_6xle2"]
 [ext_resource type="AnimationLibrary" uid="uid://cdw6yikas8dnh" path="res://Animations/locomotion.res" id="2_opmy1"]
-[ext_resource type="Script" uid="uid://dxjfoyru3w0r8" path="res://Scenes/player.gd" id="2_wqftc"]
+[ext_resource type="Script" uid="uid://dxjfoyru3w0r8" path="res://Scenes/playerTMP.gd" id="2_wqftc"]
 [ext_resource type="Script" uid="uid://dbk7ck2uxg7dt" path="res://Scripts/State Machine/StateMachine.gd" id="3_vl51c"]
 [ext_resource type="Script" uid="uid://bb4ynbm7bvgcl" path="res://Scripts/State Machine/Locomotion States/quick_turn.gd" id="5_opmy1"]
 [ext_resource type="Script" uid="uid://bu3ypyt5477ld" path="res://Scripts/State Machine/Locomotion States/Walking States/walk_state.gd" id="5_vl51c"]
