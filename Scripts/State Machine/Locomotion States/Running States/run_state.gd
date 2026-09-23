@@ -21,7 +21,7 @@ func physics_update(delta: float):
 	
 	if is_quick_turning:
 		state_machine.change_state("quickturnstate")
-	move_and_slide()
+	player.move_and_slide()
 #Player Input
 func handle_input(event: InputEvent):
 	pass

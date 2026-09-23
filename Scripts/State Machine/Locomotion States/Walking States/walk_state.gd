@@ -11,16 +11,20 @@ func enter():
 # Movement
 func _physics_process(delta):
 	handleWalk(delta)
+	handleTurn(delta)
 	
 	
-	move_and_slide()
+	player.move_and_slide()
 
 #Player Input
 func handle_input(event: InputEvent):
-	if Input.is_action_pressed("run"):
-		state_machine.change_state("runstate")
-	
-	if is_quick_turning:
+	if Input.is_action_pressed("quick_turn"):
 		state_machine.change_state("quickturnstate")
-	if Input.is_anything_pressed() == false:
-		state_machine.change_state("idlestate")
+		
+	elif Input.is_action_pressed("run"):
+		state_machine.change_state("runstate")
+		
+		if is_quick_turning:
+			state_machine.change_state("quickturnstate")
+		if Input.is_anything_pressed() == false:
+			state_machine.change_state("idlestate")

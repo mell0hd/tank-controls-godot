@@ -15,9 +15,11 @@ const quick_turn_speed := .3
 const GRAVITY = -9.81
 var is_quick_turning = false
 
+signal QuickTurnDone
+
 #Reference Variables
 var state_machine: StateMachine
-@onready var player: Player
+@onready var player: Player = $"../../../Player"
 
 
 #created own methods that child states can use and override
@@ -27,22 +29,32 @@ func handleTurn(delta):
 	# makes a direction called turn direction and its equal to axis input values that we've assigned turn left and turn right
 	# gives a value from 0-1 for each of the listed inputs.
 	var turn_direction = Input.get_axis("turn_left","turn_right")
-	rotation_degrees.y -= turn_direction * turn_speed * delta
+	player.rotation_degrees.y -= turn_direction * turn_speed * delta
 
 func quickTurn():
-	#temporary replace when you are ready to implement quick turn
-	pass
+	is_quick_turning = true
+	
+	var _target_y_rotation = player.rotation.y + PI
+
+	var tween = create_tween() as Tween
+	#interpolates between current rotation and new rotation by quick turn speed
+	tween.tween_property(player,"rotation:y", _target_y_rotation, quick_turn_speed)
+	#when tween is finished turns is quick turning back to false
+	tween.finished.connect(func(): is_quick_turning = false, func(): emit_signal("QuickTurnDone"))
+	#tween.finished.connect(_on_tween_finished)
+	
+		
+	
+	
 	
 func handleWalk(delta):	
 	#creates a value based on -1-0,0-1, so increases or decreases value based on what you're pressing?
 	var input_direction = Input.get_axis("move_backward","move_forward")
 	
 	#basis.z is where-ever the character is facing at all times
-	#if I remove player.velocity nothing happens when it is called in its various states.  
-	#if i add player.velocity then i get the error "Invalid acces to property or key 'velocity on a base object of type 'Nill'/"null instance"' etc
-	var walk_velocity = -basis.z * input_direction * walk_speed * delta
-	velocity.x = walk_velocity.x
-	velocity.z = walk_velocity.z
+	var walk_velocity = (player.basis.z * -1) * input_direction * walk_speed * delta
+	player.velocity.x = walk_velocity.x
+	player.velocity.z = walk_velocity.z
 	
 	
 func handleRun(delta):
@@ -50,15 +62,15 @@ func handleRun(delta):
 	var input_strength = Input.get_axis("move_backward","move_forward")
 	
 	#basis.z is where-ever the character is faceing at all times
-	var walk_velocity = -basis.z * input_strength * run_speed * delta
-	velocity.x = walk_velocity.x
-	velocity.z = walk_velocity.z
+	var walk_velocity = (player.basis.z * -1) * input_strength * run_speed * delta
+	player.velocity.x = walk_velocity.x
+	player.velocity.z = walk_velocity.z
 
 func handleGravity(delta):
 	if is_on_floor():
-		velocity.y = -2
+		player.velocity.y = -2
 	else:
-		velocity.y += GRAVITY * delta 
+		player.velocity.y += GRAVITY * delta 
 #---------------------------end of movement functions
 
 #---------------------------virtual functions for children
@@ -82,6 +94,10 @@ func physics_update(delta: float):
 #temp add see if it fixes movement?
 func _physics_process(delta: float) -> void:
 	move_and_slide()
+	
+func _unhandled_input(event: InputEvent) -> void:
+	pass
+	
 
 #Player Input
 func handle_input(event: InputEvent):

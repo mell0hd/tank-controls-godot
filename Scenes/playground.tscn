@@ -1182,6 +1182,9 @@ metadata/_custom_type_script = "uid://dcenh82phnybi"
 
 [node name="QuickTurnState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=1743978313]
 script = ExtResource("5_opmy1")
+turn_speed = null
+walk_speed = null
+run_speed = null
 metadata/_custom_type_script = "uid://bb4ynbm7bvgcl"
 
 [node name="WalkState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=1656315991]
