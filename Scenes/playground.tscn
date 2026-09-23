@@ -3,11 +3,11 @@
 [ext_resource type="Material" uid="uid://dr1w036iuxu" path="res://materials/grid.tres" id="1_6xle2"]
 [ext_resource type="AnimationLibrary" uid="uid://cdw6yikas8dnh" path="res://Animations/locomotion.res" id="2_opmy1"]
 [ext_resource type="Script" uid="uid://dxjfoyru3w0r8" path="res://Scenes/player.gd" id="2_wqftc"]
-[ext_resource type="Script" uid="uid://dbk7ck2uxg7dt" path="res://Scripts/State Machine/StateMachine.gd" id="4_m3lqc"]
-[ext_resource type="Script" uid="uid://dcenh82phnybi" path="res://Scripts/State Machine/Locomotion States/Idle.gd" id="5_6hjy0"]
-[ext_resource type="Script" uid="uid://borahffuyhh8n" path="res://Scripts/State Machine/Locomotion States/Running States/run_state.gd" id="6_73bjl"]
-[ext_resource type="Script" uid="uid://bu3ypyt5477ld" path="res://Scripts/State Machine/Locomotion States/Walking States/walk_state.gd" id="7_v5c3b"]
-[ext_resource type="Script" uid="uid://bb4ynbm7bvgcl" path="res://Scripts/State Machine/Locomotion States/quick_turn.gd" id="8_xfd6h"]
+[ext_resource type="Script" uid="uid://dbk7ck2uxg7dt" path="res://Scripts/State Machine/StateMachine.gd" id="3_vl51c"]
+[ext_resource type="Script" uid="uid://bb4ynbm7bvgcl" path="res://Scripts/State Machine/Locomotion States/quick_turn.gd" id="5_opmy1"]
+[ext_resource type="Script" uid="uid://bu3ypyt5477ld" path="res://Scripts/State Machine/Locomotion States/Walking States/walk_state.gd" id="5_vl51c"]
+[ext_resource type="Script" uid="uid://dcenh82phnybi" path="res://Scripts/State Machine/Locomotion States/Idle.gd" id="6_opmy1"]
+[ext_resource type="Script" uid="uid://borahffuyhh8n" path="res://Scripts/State Machine/Locomotion States/Running States/run_state.gd" id="6_vl51c"]
 [ext_resource type="PackedScene" uid="uid://dltj7nkgsaaov" path="res://Cameras/re_camera.tscn" id="9_m3lqc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qyfof"]
@@ -1171,27 +1171,27 @@ autoplay = &"mixamo_com"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7072814, 0)
 shape = SubResource("CapsuleShape3D_g6a65")
 
-[node name="StateMachine" type="CharacterBody3D" parent="Player" unique_id=927876883 node_paths=PackedStringArray("initial_state")]
-script = ExtResource("4_m3lqc")
+[node name="StateMachine" type="CharacterBody3D" parent="Player" unique_id=923590412 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_vl51c")
 initial_state = NodePath("IdleState")
 metadata/_custom_type_script = "uid://dbk7ck2uxg7dt"
 
-[node name="IdleState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=445537438]
-script = ExtResource("5_6hjy0")
+[node name="IdleState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=2044017777]
+script = ExtResource("6_opmy1")
 metadata/_custom_type_script = "uid://dcenh82phnybi"
 
-[node name="RunState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=519506352]
-script = ExtResource("6_73bjl")
-metadata/_custom_type_script = "uid://borahffuyhh8n"
+[node name="QuickTurnState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=1743978313]
+script = ExtResource("5_opmy1")
+metadata/_custom_type_script = "uid://bb4ynbm7bvgcl"
 
-[node name="WalkState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=986849310]
-script = ExtResource("7_v5c3b")
+[node name="WalkState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=1656315991]
+script = ExtResource("5_vl51c")
 metadata/_custom_type_script = "uid://bu3ypyt5477ld"
 
-[node name="QuickTurnState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=1444806658]
-script = ExtResource("8_xfd6h")
-metadata/_custom_type_script = "uid://bb4ynbm7bvgcl"
+[node name="RunState" type="CharacterBody3D" parent="Player/StateMachine" unique_id=2133681579]
+script = ExtResource("6_vl51c")
+metadata/_custom_type_script = "uid://borahffuyhh8n"
 
 [node name="ReCamera" parent="." unique_id=1684705865 instance=ExtResource("9_m3lqc")]
 transform = Transform3D(-1, 0, -8.742278e-08, -1.1090646e-08, 0.99192035, 0.1268622, 8.671643e-08, 0.1268622, -0.99192035, 0, 3.5275576, -4.8985815)
-script = null
+follow_player = true

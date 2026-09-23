@@ -17,7 +17,7 @@ var is_quick_turning = false
 
 #Reference Variables
 var state_machine: StateMachine
-@onready var player = $Player
+@onready var player: Player
 
 
 #created own methods that child states can use and override
