@@ -9,7 +9,7 @@ func enter():
 		quickTurn()
 		print("exiting quick turn change state")
 		state_machine.change_state("idlestate")
-		QuickTurnDone.connect(state_machine.change_state(""))
+		#QuickTurnDone.connect(state_machine.change_state(""))
 		
 	
 

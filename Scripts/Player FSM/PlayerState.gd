@@ -1,9 +1,33 @@
 extends CharacterBody3D
 class_name PlayerState
 
+#States
+enum {IDLE,RUN_FORWARD, RUN_BACKWARD, RUN_STRAFE_RIGHT, RUN_STRAFE_LEFT,WALK_FORWARD,WALK_BACKWARD,WALK_STRAFE_RIGHT,WALK_STRAFE_LEFT,CROUCH,TURN,CROUCHING,LOCOMOTION}
+var current_state = IDLE
 
 
-#Basic Movement Variables
+
+# Animation Position Values -- values to set the current animation 
+#F = forward
+#B = backward
+#SR = strafe right
+#SL = strafe left
+#I = Idle
+
+#-----------------Specifc Run/Walk Blends
+var run_val := Vector2(0.0,1.0)
+var walk_val := Vector2(0.0,1.0)
+var crouch_val = 0.0
+
+#------------------State Blends
+var turn_val = 0.0
+var crouching_val = 0.0
+var locomotion_val = 0.0
+
+#-----------------Blend Speed
+var blend_speed = .8
+
+#-----------------Basic Movement Variables
 @export_group("Movement Settings")
 @export var turn_speed := 180.0
 #time it takes to quick turn in seconds
@@ -15,11 +39,11 @@ const quick_turn_speed := .3
 const GRAVITY = -9.81
 var is_quick_turning = false
 
-signal QuickTurnDone
-
-#Reference Variables
-var state_machine: StateMachine
+#----------------------Reference Variables
+var state_machine: PlayerStateMachine
 @onready var player: Player = $"../../../Player"
+@onready var animation: AnimationTree = $"../../../Player/Model/AnimationTree"
+
 
 
 #created own methods that child states can use and override
@@ -40,12 +64,8 @@ func quickTurn():
 	#interpolates between current rotation and new rotation by quick turn speed
 	tween.tween_property(player,"rotation:y", _target_y_rotation, quick_turn_speed)
 	#when tween is finished turns is quick turning back to false
-	tween.finished.connect(func(): is_quick_turning = false, func(): emit_signal("QuickTurnDone"))
+	tween.finished.connect(func(): is_quick_turning = false)
 	#tween.finished.connect(_on_tween_finished)
-	
-		
-	
-	
 	
 func handleWalk(delta):	
 	#creates a value based on -1-0,0-1, so increases or decreases value based on what you're pressing?
@@ -75,6 +95,43 @@ func handleGravity(delta):
 
 #---------------------------virtual functions for children
 
+#Everything in here is set to 0 which means it will automatically idle, change these for various states
+func handleAnimation(delta):
+	match current_state:
+		IDLE:
+			#specific animations
+				run_val.x = lerpf(run_val.x ,0.0,blend_speed*delta)
+				run_val.y = lerpf(run_val.y ,0.0,blend_speed*delta)
+				walk_val.x = lerpf(walk_val.x ,0.0,blend_speed*delta)
+				walk_val.y = lerpf(walk_val.y ,0.0,blend_speed*delta)
+			#state animatinos
+				locomotion_val = lerpf(locomotion_val, 0.0, blend_speed*delta)
+				crouching_val = lerpf(crouching_val ,0.0,blend_speed*delta)
+				#turn value will be handled in functin "handleTurn()"
+		RUN_FORWARD:
+			#specific animations
+				run_val.x = lerpf(run_val.x ,0.0,blend_speed*delta)
+				run_val.y = lerpf(run_val.y ,1.0,blend_speed*delta)
+				walk_val.x = lerpf(walk_val.x ,0.0,blend_speed*delta)
+				walk_val.y = lerpf(walk_val.y ,0.0,blend_speed*delta)
+			#state animatinos
+				locomotion_val = lerpf(locomotion_val, 1.0, blend_speed*delta)
+				crouching_val = lerpf(crouching_val ,0.0,blend_speed*delta)
+				#turn value will be handled in functin "handleTurn()"
+	
+#updates the animation tree to change animations based on values assigned earlier
+func update_tree():
+	# States Animations
+	animation.set("parameters/Locomotion Blend/blend_amount", locomotion_val)
+	animation.set("parameters/Crouch Blend/blend_position", crouching_val)
+	animation.set("parameters/Turn Blend/blend_amount", turn_val )
+	
+	# Specific Animations Run/Walk/Crouch
+	
+	animation.set("parameters/Walk Locomotion/blend_position", walk_val )
+	animation.set("parameters/Run Locomotion/blend_position", run_val )
+	animation.set("parameters/Crouching Locomotion/blend_position", crouch_val )
+
 # Initilization
 func enter():
 	pass
@@ -102,3 +159,4 @@ func _unhandled_input(event: InputEvent) -> void:
 #Player Input
 func handle_input(event: InputEvent):
 	pass
+#-------------------- virtual functinos
