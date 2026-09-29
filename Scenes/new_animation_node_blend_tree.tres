@@ -90,7 +90,7 @@ blend_point_3/name = &"locomotion_walking_strafe_right"
 triangles = PackedInt32Array(0, 1, 2, 0, 1, 3)
 
 [resource]
-graph_offset = Vector2(-738.4226, -391.41132)
+graph_offset = Vector2(-837.59955, -312.3593)
 nodes/output/position = Vector2(480, -20)
 "nodes/Walk Locomotion/node" = SubResource("AnimationNodeBlendSpace2D_aok8e")
 "nodes/Walk Locomotion/position" = Vector2(-840, -400)

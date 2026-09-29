@@ -2,8 +2,8 @@ extends CharacterBody3D
 class_name PlayerState
 
 #States
-enum {IDLE,RUN_FORWARD, RUN_BACKWARD, RUN_STRAFE_RIGHT, RUN_STRAFE_LEFT,WALK_FORWARD,WALK_BACKWARD,WALK_STRAFE_RIGHT,WALK_STRAFE_LEFT,CROUCH,TURN,CROUCHING,LOCOMOTION}
-var current_state = IDLE
+
+#var current_state = IDLE
 
 
 
@@ -14,18 +14,7 @@ var current_state = IDLE
 #SL = strafe left
 #I = Idle
 
-#-----------------Specifc Run/Walk Blends
-var run_val := Vector2(0.0,1.0)
-var walk_val := Vector2(0.0,1.0)
-var crouch_val = 0.0
 
-#------------------State Blends
-var turn_val = 0.0
-var crouching_val = 0.0
-var locomotion_val = 0.0
-
-#-----------------Blend Speed
-var blend_speed = .8
 
 #-----------------Basic Movement Variables
 @export_group("Movement Settings")
@@ -96,41 +85,10 @@ func handleGravity(delta):
 #---------------------------virtual functions for children
 
 #Everything in here is set to 0 which means it will automatically idle, change these for various states
-func handleAnimation(delta):
-	match current_state:
-		IDLE:
-			#specific animations
-				run_val.x = lerpf(run_val.x ,0.0,blend_speed*delta)
-				run_val.y = lerpf(run_val.y ,0.0,blend_speed*delta)
-				walk_val.x = lerpf(walk_val.x ,0.0,blend_speed*delta)
-				walk_val.y = lerpf(walk_val.y ,0.0,blend_speed*delta)
-			#state animatinos
-				locomotion_val = lerpf(locomotion_val, 0.0, blend_speed*delta)
-				crouching_val = lerpf(crouching_val ,0.0,blend_speed*delta)
-				#turn value will be handled in functin "handleTurn()"
-		RUN_FORWARD:
-			#specific animations
-				run_val.x = lerpf(run_val.x ,0.0,blend_speed*delta)
-				run_val.y = lerpf(run_val.y ,1.0,blend_speed*delta)
-				walk_val.x = lerpf(walk_val.x ,0.0,blend_speed*delta)
-				walk_val.y = lerpf(walk_val.y ,0.0,blend_speed*delta)
-			#state animatinos
-				locomotion_val = lerpf(locomotion_val, 1.0, blend_speed*delta)
-				crouching_val = lerpf(crouching_val ,0.0,blend_speed*delta)
-				#turn value will be handled in functin "handleTurn()"
+
 	
 #updates the animation tree to change animations based on values assigned earlier
-func update_tree():
-	# States Animations
-	animation.set("parameters/Locomotion Blend/blend_amount", locomotion_val)
-	animation.set("parameters/Crouch Blend/blend_position", crouching_val)
-	animation.set("parameters/Turn Blend/blend_amount", turn_val )
-	
-	# Specific Animations Run/Walk/Crouch
-	
-	animation.set("parameters/Walk Locomotion/blend_position", walk_val )
-	animation.set("parameters/Run Locomotion/blend_position", run_val )
-	animation.set("parameters/Crouching Locomotion/blend_position", crouch_val )
+
 
 # Initilization
 func enter():
@@ -150,7 +108,7 @@ func physics_update(delta: float):
 
 #temp add see if it fixes movement?
 func _physics_process(delta: float) -> void:
-	move_and_slide()
+	player.move_and_slide()
 	
 func _unhandled_input(event: InputEvent) -> void:
 	pass
