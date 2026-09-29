@@ -8,10 +8,18 @@ func enter():
 
 #Frame Logic
 func update(delta: float):
-	pass
+	update_tree()
 
 # Movement
-func _physics_process(delta: float) -> void:
+func physics_update(delta: float):
+	#specific animations
+	run_val.x = lerpf(run_val.x ,0.0,blend_speed*delta)
+	run_val.y = lerpf(run_val.y ,1.0,blend_speed*delta)
+	walk_val.x = lerpf(walk_val.x ,0.0,blend_speed*delta)
+	walk_val.y = lerpf(walk_val.y ,1.0,blend_speed*delta)
+#state animatinos
+	locomotion_val = lerpf(locomotion_val, 1.0, blend_speed*delta)
+	crouching_val = lerpf(crouching_val ,0.0,blend_speed*delta)
 	handleTurn(delta)
 	if Input.is_action_pressed("run"):
 		handleRun(delta)
